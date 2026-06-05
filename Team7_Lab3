@@ -12,9 +12,9 @@ Stories Included: [19, 17, 6]
 
 ## Planning Poker Summary
 
-Story 19: 5
-Story 17: 3
-Story 6: 5
+Story 19: 8
+Story 17: 2
+Story 6: 8
 
 
 ## User Story 19
@@ -25,7 +25,7 @@ I want to have the system produce meaningful output from stored data
 
 So that users gain value from interacting with it.
 
-Agreed Effort Level: ?
+Agreed Effort Level: 8
 
 ## User Story 17
 
@@ -35,7 +35,7 @@ I want to document how to run the application in a README file.
 
 So that new developers can get started quickly.
 
-Agreed Effort Level: ?
+Agreed Effort Level: 2
 
 ## User Story 6 
 
@@ -45,4 +45,4 @@ I want to write Python functions that insert data into a SQL database
 
 So that data storage logic is reusable and centralized. 
 
-Agreed Effort Level: ? 
+Agreed Effort Level: 8 
