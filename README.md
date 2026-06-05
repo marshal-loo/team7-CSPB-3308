@@ -5,7 +5,7 @@ Team Members
 
 Rachael Glazner
 Lauren Heylmun
-Marshal Loo  (GitHub: marshal-loo, malo6853@colorado.edu
+Marshal Loo  (GitHub: marshal-loo, malo6853@colorado.edu)
 Elysha Smith
 
 
