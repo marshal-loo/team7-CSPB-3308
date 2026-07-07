@@ -1,6 +1,35 @@
+import math
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
+
+
+# --- Helper Function ---
+def calculate_distance(restaurant_coord, user_coord):
+    R = 3956.0  # Radius of the Earth in miles
+    
+    # 1. Unpack the tuples
+    lat1, lon1 = restaurant_coord
+    lat2, lon2 = user_coord
+    
+    # 2. Convert degrees to radians
+    lat1_rad = math.radians(lat1)
+    lon1_rad = math.radians(lon1)
+    lat2_rad = math.radians(lat2)
+    lon2_rad = math.radians(lon2)
+
+    # 3. Calculate differences
+    dlat = lat2_rad - lat1_rad
+    dlon = lon2_rad - lon1_rad
+
+    # 4. Haversine formula math
+    a = math.sin(dlat / 2)**2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(dlon / 2)**2
+    c = 2 * math.asin(math.sqrt(a))
+
+    # Calculate the final distance
+    distance = R * c
+    
+    return distance
 
 @app.route('/')
 def home():
@@ -23,8 +52,28 @@ def add_item():
 @app.route('/reserve-item', methods=['POST'])
 def reserve_item():
     item_id = request.form.get('item_id')
-    # TODO: Link MongoDB queries
-    return jsonify(message="Item reserved successfully!"), 200
+    
+    # 1. Extract location data from the incoming request form
+    user_lat = request.form.get('user_lat')
+    user_lon = request.form.get('user_lon')
+    restaurant_lat = request.form.get('restaurant_lat')
+    restaurant_lon = request.form.get('restaurant_lon')
+    
+    # 2. Bundle them into tuples (converting strings to floats)
+    user_coord = (float(user_lat), float(user_lon))
+    restaurant_coord = (float(restaurant_lat), float(restaurant_lon))
+    
+    # 3. Calculate the distance using the helper function
+    distance = calculate_distance(restaurant_coord, user_coord)
+    
+    # 4. Enforce delivery rules
+    if distance <= 5 and delivery_available:
+        # TODO: MongoDB reservation queries here
+        return jsonify(message="Item reserved successfully!"), 200
+    elif distance > 5:
+        return jsonify(error="Cannot deliver when distance is greater than 5 miles"), 400
+    else:
+        return jsonify(error="This restaurant does not offer delivery."), 400
 
 if __name__ == '__main__':
     app.run(debug=True)
