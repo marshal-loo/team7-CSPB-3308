@@ -59,7 +59,15 @@ def reserve_item():
     restaurant_lat = request.form.get('restaurant_lat')
     restaurant_lon = request.form.get('restaurant_lon')
     
-    # 2. Bundle them into tuples (converting strings to floats)
+    # 2. Bundle into tuples (converting incoming strings to floats)
+    # 2.5 Validate all coordinate boundaries first
+    if (not (-90 <= float(user_lat) <= 90) or 
+        not (-180 <= float(user_lon) <= 180) or 
+        not (-90 <= float(restaurant_lat) <= 90) or 
+        not (-180 <= float(restaurant_lon) <= 180)):
+        
+        return jsonify(error="Invalid coordinates. Latitude must be between -90/90 and longitude between -180/180."), 400
+
     user_coord = (float(user_lat), float(user_lon))
     restaurant_coord = (float(restaurant_lat), float(restaurant_lon))
     
