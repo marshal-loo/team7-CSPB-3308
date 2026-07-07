@@ -70,13 +70,15 @@ def reserve_item():
 
     user_coord = (float(user_lat), float(user_lon))
     restaurant_coord = (float(restaurant_lat), float(restaurant_lon))
+
+    delivery_available = True # PLACEHOLDER TODO: PROVIDE CORRECT VALUE FROM MONGODB
     
     # 3. Calculate the distance using the helper function
     distance = calculate_distance(restaurant_coord, user_coord)
     
     # 4. Enforce delivery rules
     if distance <= 5 and delivery_available:
-        # TODO: MongoDB reservation queries here
+        # TODO: MONGODB RESERVATION QUERIES HERE
         return jsonify(message="Item reserved successfully!"), 200
     elif distance > 5:
         return jsonify(error="Cannot deliver when distance is greater than 5 miles"), 400
